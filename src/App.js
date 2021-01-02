@@ -12,13 +12,28 @@ class App extends Component {
     };
   }
 
+  componentDidMount() {
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then((response) => {
+        return response.json();
+      })
+      .then((users) => {
+        this.setState({ robots: users });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   onSearchChange = (event) => {
     this.setState({ searchfield: event.target.value });
   };
 
   render() {
     const filteredRobots = this.state.robots.filter((robot) => {
-      return robot.name.toLowerCase().includes(this.state.searchfield.toLowerCase());
+      return robot.name
+        .toLowerCase()
+        .includes(this.state.searchfield.toLowerCase());
     });
     return (
       <div className="tc">
